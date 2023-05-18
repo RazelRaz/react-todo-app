@@ -1,21 +1,19 @@
 import { useState } from 'react';
 import '../src/styles.css'
+import NewTodoForm from './NewTodoForm';
 
 const App = () => {
 
-  const [newItem, setNewItem] = useState("")
+
   const [todos, setTodos] = useState([])
 
-  function handleSubmit(e){
-    e.preventDefault()
-
+  function addTodo(title) {
     // passing current value
     setTodos((currentTodos) => {
       return [...currentTodos, 
-        { id: crypto.randomUUID(), title: newItem, completed: false},
+        { id: crypto.randomUUID(), title, completed: false},
       ]
     })
-    setNewItem("")
   }
 
   // console.log(todos);
@@ -41,13 +39,7 @@ const App = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className='new_item_form'>
-        <div className='form_row'>
-          <label htmlFor='item'>New Item</label>
-          <input value={newItem} onChange={e => setNewItem(e.target.value)} type='text' id='item' />
-        </div>
-        <button className='btn'>Add</button>
-      </form>
+      <NewTodoForm onSubmit={addTodo}></NewTodoForm>
       <h1>Todo List</h1>
       <ul className='list'>
         {todos.length === 0 && "No Todos"}
